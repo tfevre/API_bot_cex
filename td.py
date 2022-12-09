@@ -133,19 +133,20 @@ def deleteRequest(endpoint, params):
 
 
 def createOrder(pair, side, _type, qty, price):
-    # "/test" is added to avoid any unwanted orders
-    data = postRequest('order/test', {"symbol": pair, 'side':side, 'type':_type, 'quantity':qty, 'price':price})
+    # "/test" can be added to validate the call before sending it
+    data = postRequest('order', {"symbol": pair, 'side':side, 'type':_type, 'quantity':qty, 'price':price, 'timeInForce':'GTC'})
     print(data)
 
-# createOrder('EURBUSD', 'BUY', 'MARKET', '10')
+# createOrder('EURBUSD', 'SELL', 'LIMIT', '10', '1.2')
+# {'symbol': 'EURBUSD', 'orderId': 129036806, 'orderListId': -1, 'clientOrderId': '2fcs4a1f9JQGr85RSOgXuq', 'transactTime': 1670610281589, 'price': '1.20000000', 'origQty': '10.00000000', 'executedQty': '0.00000000', 'cummulativeQuoteQty': '0.00000000', 'status': 'NEW', 'timeInForce': 'GTC', 'type': 'LIMIT', 'side': 'SELL', 'fills': []}
 
 def cancelOrder(pair, orderID):
     # "/test" is added to avoid any unwanted orders
     data = deleteRequest('order', {"symbol": pair, 'orderId': orderID})
     print(data)
 
-
-# cancelOrder('EURBUSD', '4')
+# cancelOrder('EURBUSD', '129036806')
+# {'symbol': 'EURBUSD', 'origClientOrderId': '2fcs4a1f9JQGr85RSOgXuq', 'orderId': 129036806, 'orderListId': -1, 'clientOrderId': 'N853dzcJs2xTeIaOWThh4T', 'price': '1.20000000', 'origQty': '10.00000000', 'executedQty': '0.00000000', 'cummulativeQuoteQty': '0.00000000', 'status': 'CANCELED', 'timeInForce': 'GTC', 'type': 'LIMIT', 'side': 'SELL'}
 
 
 
